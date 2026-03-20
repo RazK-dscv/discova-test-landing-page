@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discova | Events & FAM Trips</title>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── BRAND TOKENS ─────────────────────────────── */
+    :root {
+      --voyager-teal-dark:  #0C4A5B;
+      --voyager-teal:       #00837F;
+      --voyager-teal-light: #25C2BA;
+      --amber-gold-deep:    #EE7239;
+      --amber-gold:         #FAAC18;
+      --amber-gold-light:   #F5C842;
+      --velvet-dusk:        #A03895;
+      --velvet-dusk-light:  #CFA8CE;
+      --off-white:          #F5F3EF;
+      --dark-charcoal:      #1A1A1A;
+      --mid-grey:           #4A4A4A;
+      --light-grey:         #E8E4DF;
+
+      --font-display: 'Spectral', Georgia, serif;
+      --font-body:    'Work Sans', system-ui, sans-serif;
+    }
+
+    /* ─── RESET / BASE ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--off-white);
+      color: var(--dark-charcoal);
+      overflow-x: hidden;
+    }
+
+    /* ─── INTERWOVEN THREADS (SVG BG) ──────────────── */
+    .threads-bg {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0;
+    }
+    .threads-bg svg { width: 100%; height: 100%; }
+
+    /* ─── NAV ───────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(12, 74, 91, 0.97);
+      backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 4rem;
+      height: 72px;
+      border-bottom: 2px solid var(--amber-gold-deep);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .nav-logo-mark {
+      width: 42px; height: 42px;
+      background: var(--amber-gold-deep);
+      border-radius: 50% 50% 50% 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700; font-size: 1.4rem; color: #fff;
+      letter-spacing: -1px;
+      box-shadow: 0 0 0 4px rgba(250,172,24,0.25);
+    }
+    .nav-wordmark {
+      font-family: var(--font-display);
+      font-weight: 600; font-size: 1.35rem;
+      color: #fff; letter-spacing: 2px; text-transform: uppercase;
+    }
+    .nav-tagline {
+      font-family: var(--font-body);
+      font-weight: 300; font-size: 0.7rem;
+      color: var(--voyager-teal-light); letter-spacing: 1.5px;
+      text-transform: uppercase; margin-top: 1px;
+    }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-body); font-weight: 500;
+      font-size: 0.82rem; letter-spacing: 1px;
+      text-transform: uppercase; color: rgba(255,255,255,0.8);
+      text-decoration: none; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--amber-gold); }
+
+    /* ─── HERO ──────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 88vh;
+      background: linear-gradient(135deg, var(--voyager-teal-dark) 0%, var(--voyager-teal) 55%, var(--voyager-teal-light) 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 8rem;
+      overflow: hidden;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 800px; }
+    .hero-eyebrow {
+      font-family: var(--font-body); font-weight: 500;
+      font-size: 0.78rem; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--amber-gold); margin-bottom: 1.4rem;
+    }
+    .hero h1 {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      color: #fff; line-height: 1.1; margin-bottom: 1.4rem;
+    }
+    .hero h1 em { color: var(--amber-gold); font-style: italic; }
+    .hero-sub {
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 1.15rem; line-height: 1.7;
+      color: rgba(255,255,255,0.85); max-width: 560px; margin: 0 auto 2.8rem;
+    }
+    .hero-cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-body); font-weight: 600;
+      font-size: 0.82rem; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 0.85rem 2rem; border-radius: 2px; cursor: pointer;
+      text-decoration: none; transition: all .25s; border: 2px solid transparent;
+    }
+    .btn-primary {
+      background: var(--amber-gold-deep); color: #fff;
+      border-color: var(--amber-gold-deep);
+    }
+    .btn-primary:hover { background: var(--amber-gold); border-color: var(--amber-gold); color: var(--dark-charcoal); }
+    .btn-outline {
+      background: transparent; color: #fff;
+      border-color: rgba(255,255,255,0.6);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+
+    /* Immersive curtain shape at bottom of hero */
+    .hero-curtain {
+      position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 120px; z-index: 1;
+    }
+    .hero-curtain svg { display: block; }
+
+    /* ─── SECTION WRAPPER ───────────────────────────── */
+    .section {
+      position: relative; padding: 7rem 0;
+    }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+
+    .section-header { text-align: center; margin-bottom: 4rem; position: relative; z-index: 1; }
+    .section-label {
+      font-family: var(--font-body); font-weight: 600;
+      font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--amber-gold-deep); margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: clamp(2rem, 4vw, 3rem); color: var(--voyager-teal-dark);
+      line-height: 1.15; margin-bottom: 1rem;
+    }
+    .section-desc {
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 1rem; line-height: 1.75;
+      color: var(--mid-grey); max-width: 560px; margin: 0 auto;
+    }
+    .section-divider {
+      width: 48px; height: 3px;
+      background: var(--amber-gold-deep);
+      margin: 1.2rem auto 0; border-radius: 2px;
+    }
+
+    /* ─── EVENTS SECTION ────────────────────────────── */
+    #events { background: var(--off-white); }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem; position: relative; z-index: 1;
+    }
+
+    .event-card {
+      background: #fff;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      transition: transform .3s, box-shadow .3s;
+      display: flex; flex-direction: column;
+    }
+    .event-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0,131,127,0.15);
+    }
+    .event-card-header {
+      padding: 1.6rem 1.8rem 1.2rem;
+      background: var(--voyager-teal-dark);
+      position: relative; overflow: hidden;
+    }
+    .event-card-header::after {
+      content: '';
+      position: absolute; top: 0; right: -30px;
+      width: 120px; height: 120px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+    }
+    .event-date-badge {
+      display: inline-flex; flex-direction: column; align-items: center;
+      background: var(--amber-gold-deep);
+      color: #fff; padding: 0.5rem 0.9rem;
+      border-radius: 2px; margin-bottom: 1rem;
+      min-width: 64px;
+    }
+    .event-date-badge .day {
+      font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; line-height: 1;
+    }
+    .event-date-badge .month {
+      font-family: var(--font-body); font-weight: 600; font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+    }
+    .event-title {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: 1.2rem; color: #fff; line-height: 1.3; margin-bottom: 0.4rem;
+    }
+    .event-location {
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 0.8rem; color: var(--voyager-teal-light);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .event-card-body {
+      padding: 1.4rem 1.8rem; flex: 1;
+    }
+    .event-desc {
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 0.88rem; line-height: 1.65; color: var(--mid-grey);
+      margin-bottom: 1.4rem;
+    }
+    .event-tags {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.4rem;
+    }
+    .tag {
+      font-family: var(--font-body); font-weight: 500;
+      font-size: 0.68rem; letter-spacing: 1px; text-transform: uppercase;
+      padding: 0.28rem 0.7rem; border-radius: 20px;
+      background: rgba(37,194,186,0.12); color: var(--voyager-teal);
+      border: 1px solid rgba(37,194,186,0.3);
+    }
+    .event-card-footer {
+      padding: 0 1.8rem 1.6rem;
+    }
+    .btn-book {
+      width: 100%;
+      background: var(--voyager-teal); color: #fff;
+      border-color: var(--voyager-teal);
+      justify-content: center;
+    }
+    .btn-book:hover { background: var(--voyager-teal-dark); border-color: var(--voyager-teal-dark); }
+
+    /* Meeting modal */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(12,74,91,0.7);
+      backdrop-filter: blur(4px);
+      z-index: 999; display: none; align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #fff; border-radius: 4px;
+      max-width: 520px; width: 100%;
+      overflow: hidden;
+      animation: slideUp .3s ease;
+    }
+    @keyframes slideUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform:none; } }
+    .modal-header {
+      background: var(--voyager-teal-dark);
+      padding: 2rem 2.4rem 1.6rem;
+      position: relative;
+    }
+    .modal-header h2 {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: 1.6rem; color: #fff; margin-bottom: 0.3rem;
+    }
+    .modal-header p {
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 0.85rem; color: var(--voyager-teal-light);
+    }
+    .modal-event-tag {
+      display: inline-block; margin-top: 0.8rem;
+      background: var(--amber-gold-deep); color: #fff;
+      font-family: var(--font-body); font-weight: 600; font-size: 0.72rem;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 0.3rem 0.8rem; border-radius: 2px;
+    }
+    .modal-close {
+      position: absolute; top: 1.2rem; right: 1.4rem;
+      background: none; border: none; color: rgba(255,255,255,0.6);
+      font-size: 1.5rem; cursor: pointer; line-height: 1;
+    }
+    .modal-close:hover { color: #fff; }
+    .modal-body { padding: 2rem 2.4rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+    .form-group label {
+      font-family: var(--font-body); font-weight: 600;
+      font-size: 0.72rem; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--mid-grey);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 0.9rem; padding: 0.7rem 1rem;
+      border: 1.5px solid var(--light-grey); border-radius: 2px;
+      color: var(--dark-charcoal); background: var(--off-white);
+      transition: border-color .2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--voyager-teal); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .modal-footer {
+      padding: 0 2.4rem 2rem;
+      display: flex; gap: 1rem;
+    }
+    .btn-submit {
+      flex: 1;
+      background: var(--amber-gold-deep); color: #fff;
+      border-color: var(--amber-gold-deep);
+      justify-content: center;
+    }
+    .btn-submit:hover { background: var(--amber-gold-deep); filter: brightness(1.1); }
+    .btn-cancel {
+      background: transparent; color: var(--mid-grey);
+      border-color: var(--light-grey);
+    }
+    .btn-cancel:hover { border-color: var(--mid-grey); }
+
+    /* ─── FAM & INCENTIVES SECTION ──────────────────── */
+    #fam {
+      background: linear-gradient(175deg, #0f2f3a 0%, var(--voyager-teal-dark) 100%);
+      overflow: hidden;
+    }
+    #fam .section-title { color: #fff; }
+    #fam .section-desc  { color: rgba(255,255,255,0.7); }
+    #fam .section-label { color: var(--amber-gold); }
+    #fam .section-divider { background: var(--amber-gold); }
+
+    /* Tabs */
+    .tabs {
+      display: flex; justify-content: center; gap: 0;
+      margin-bottom: 3.5rem; position: relative; z-index: 1;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 2px; width: fit-content; margin-left: auto; margin-right: auto;
+      overflow: hidden;
+    }
+    .tab-btn {
+      font-family: var(--font-body); font-weight: 600;
+      font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase;
+      padding: 0.9rem 2.4rem; cursor: pointer;
+      background: transparent; border: none; color: rgba(255,255,255,0.55);
+      transition: all .2s; position: relative;
+    }
+    .tab-btn.active { background: var(--amber-gold-deep); color: #fff; }
+    .tab-btn:not(.active):hover { color: #fff; background: rgba(255,255,255,0.05); }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* FAM Trip Cards */
+    .fam-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 2rem; position: relative; z-index: 1;
+    }
+    .fam-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 4px; overflow: hidden;
+      transition: transform .3s, background .3s;
+    }
+    .fam-card:hover {
+      transform: translateY(-6px);
+      background: rgba(255,255,255,0.1);
+    }
+    .fam-card-img {
+      height: 180px; position: relative;
+      background: linear-gradient(135deg, var(--voyager-teal) 0%, var(--voyager-teal-dark) 100%);
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+    }
+    .fam-card-img-pattern {
+      position: absolute; inset: 0;
+      opacity: 0.15;
+      background-image: repeating-linear-gradient(
+        45deg, var(--amber-gold) 0, var(--amber-gold) 1px,
+        transparent 0, transparent 50%
+      );
+      background-size: 12px 12px;
+    }
+    .fam-dest-badge {
+      position: relative; z-index: 1;
+      margin: 0 1.4rem 1.2rem;
+      font-family: var(--font-display); font-weight: 600;
+      font-size: 1.5rem; color: #fff;
+    }
+    .fam-dest-badge span {
+      display: block; font-family: var(--font-body);
+      font-weight: 300; font-size: 0.75rem; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--amber-gold); margin-bottom: 3px;
+    }
+    .fam-card-body { padding: 1.4rem 1.6rem 1.6rem; }
+    .fam-card-title {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: 1.05rem; color: #fff; margin-bottom: 0.6rem;
+    }
+    .fam-card-meta {
+      display: flex; gap: 1rem; margin-bottom: 0.9rem; flex-wrap: wrap;
+    }
+    .fam-meta-item {
+      display: flex; align-items: center; gap: 5px;
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 0.78rem; color: var(--voyager-teal-light);
+    }
+    .fam-card-desc {
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 0.85rem; line-height: 1.65; color: rgba(255,255,255,0.65);
+      margin-bottom: 1.4rem;
+    }
+
+    /* Qualify box */
+    .qualify-criteria {
+      margin-bottom: 1.4rem;
+    }
+    .qualify-label {
+      font-family: var(--font-body); font-weight: 600;
+      font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--amber-gold); margin-bottom: 0.6rem;
+    }
+    .criteria-list {
+      list-style: none; display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .criteria-list li {
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 0.82rem; color: rgba(255,255,255,0.75);
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .criteria-list li::before {
+      content: '✦'; color: var(--amber-gold-deep); font-size: 0.5rem; margin-top: 5px; flex-shrink: 0;
+    }
+    .btn-fam {
+      width: 100%;
+      background: transparent; color: var(--amber-gold);
+      border: 1.5px solid var(--amber-gold-deep);
+      justify-content: center;
+    }
+    .btn-fam:hover {
+      background: var(--amber-gold-deep); color: #fff; border-color: var(--amber-gold-deep);
+    }
+
+    /* Incentives Cards */
+    .incentives-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.6rem; position: relative; z-index: 1;
+    }
+    .incentive-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 4px; padding: 1.8rem 1.8rem 2rem;
+      transition: transform .3s, background .3s;
+      position: relative; overflow: hidden;
+    }
+    .incentive-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 4px; height: 100%;
+    }
+    .incentive-card.gold::before   { background: var(--amber-gold); }
+    .incentive-card.teal::before   { background: var(--voyager-teal-light); }
+    .incentive-card.velvet::before { background: var(--velvet-dusk-light); }
+    .incentive-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.1);
+    }
+    .incentive-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 1.2rem;
+    }
+    .incentive-icon.gold   { background: rgba(250,172,24,0.15); }
+    .incentive-icon.teal   { background: rgba(37,194,186,0.15); }
+    .incentive-icon.velvet { background: rgba(207,168,206,0.15); }
+    .incentive-title {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: 1.05rem; color: #fff; margin-bottom: 0.5rem; line-height: 1.2;
+    }
+    .incentive-period {
+      font-family: var(--font-body); font-weight: 500;
+      font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase;
+      margin-bottom: 0.9rem;
+    }
+    .incentive-period.gold   { color: var(--amber-gold); }
+    .incentive-period.teal   { color: var(--voyager-teal-light); }
+    .incentive-period.velvet { color: var(--velvet-dusk-light); }
+    .incentive-desc {
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 0.84rem; line-height: 1.65; color: rgba(255,255,255,0.65);
+      margin-bottom: 1.2rem;
+    }
+    .incentive-qualify {
+      padding: 1rem 1.1rem;
+      background: rgba(0,0,0,0.2);
+      border-radius: 2px;
+    }
+    .incentive-qualify .qualify-label { margin-bottom: 0.5rem; }
+    .incentive-qualify .criteria-list li { font-size: 0.78rem; }
+    .incentive-status {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 1.2rem;
+      font-family: var(--font-body); font-weight: 600;
+      font-size: 0.68rem; letter-spacing: 1px; text-transform: uppercase;
+      color: #fff;
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #4ade80; box-shadow: 0 0 6px #4ade80;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    /* ─── HOW TO QUALIFY SECTION ────────────────────── */
+    .qualify-how {
+      margin-top: 4rem; position: relative; z-index: 1;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px; padding: 3rem;
+    }
+    .qualify-how h3 {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: 1.6rem; color: #fff; margin-bottom: 0.6rem;
+    }
+    .qualify-how > p {
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 0.9rem; color: rgba(255,255,255,0.65);
+      line-height: 1.7; margin-bottom: 2.4rem; max-width: 600px;
+    }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 1.6rem;
+    }
+    .step {
+      display: flex; flex-direction: column; gap: 0.7rem;
+    }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--amber-gold-deep);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; color: #fff;
+      flex-shrink: 0;
+    }
+    .step-label {
+      font-family: var(--font-body); font-weight: 600;
+      font-size: 0.85rem; color: #fff;
+    }
+    .step-desc {
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 0.8rem; color: rgba(255,255,255,0.6); line-height: 1.6;
+    }
+
+    /* ─── CTA BAND ───────────────────────────────────── */
+    .cta-band {
+      background: var(--amber-gold-deep);
+      padding: 4.5rem 2rem; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 240px; height: 240px;
+      background: rgba(255,255,255,0.08); border-radius: 50%;
+    }
+    .cta-band h2 {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: clamp(1.6rem, 3.5vw, 2.6rem); color: #fff;
+      margin-bottom: 0.8rem; position: relative; z-index: 1;
+    }
+    .cta-band p {
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 1rem; color: rgba(255,255,255,0.9);
+      margin-bottom: 2rem; position: relative; z-index: 1;
+    }
+    .cta-band .btn {
+      background: #fff; color: var(--amber-gold-deep);
+      border-color: #fff; position: relative; z-index: 1;
+    }
+    .cta-band .btn:hover { background: var(--voyager-teal-dark); color: #fff; border-color: var(--voyager-teal-dark); }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--voyager-teal-dark);
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+    footer .footer-logo {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: 1.2rem; color: #fff; letter-spacing: 3px;
+      text-transform: uppercase; margin-bottom: 0.4rem;
+    }
+    footer .footer-tagline {
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 0.78rem; color: var(--voyager-teal-light);
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2rem;
+    }
+    footer .footer-copy {
+      font-family: var(--font-body); font-weight: 300;
+      font-size: 0.75rem; color: rgba(255,255,255,0.4);
+    }
+
+    /* ─── ANIMATIONS ─────────────────────────────────── */
+    .fade-up {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.4rem; }
+      .nav-links { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .qualify-how { padding: 2rem 1.4rem; }
+      .tabs { width: 100%; }
+      .tab-btn { flex: 1; padding: 0.85rem 1rem; font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────── -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-mark">D</div>
+    <div>
+      <div class="nav-wordmark">Discova</div>
+      <div class="nav-tagline">Purpose-Driven Journeys</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#events">Events</a></li>
+    <li><a href="#fam">FAM Trips & Incentives</a></li>
+    <li><a href="#contact" class="btn btn-primary" style="padding:.55rem 1.3rem">Get in Touch</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────── -->
+<section class="hero">
+  <div class="threads-bg">
+    <svg viewBox="0 0 1440 640" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,200 C200,100 400,300 600,180 C800,60 1000,280 1200,160 C1350,80 1440,200 1440,200" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="2"/>
+      <path d="M0,300 C180,200 380,400 580,280 C780,160 980,360 1180,240 C1330,150 1440,280 1440,280" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1.5"/>
+      <path d="M0,420 C220,320 420,500 640,380 C860,260 1060,460 1260,340 C1380,270 1440,360 1440,360" fill="none" stroke="rgba(250,172,24,0.1)" stroke-width="1.5"/>
+      <path d="M0,500 C250,400 480,580 720,460 C960,340 1160,520 1360,400 C1420,370 1440,420 1440,420" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Tours · Transfers · Tailormade</p>
+    <h1>Connect with <em>Asia's</em><br/>Leading DMC</h1>
+    <p class="hero-sub">Meet the Discova team at trade events across the globe, or earn your place on an unforgettable FAM Trip. Every interaction is a purpose-driven journey.</p>
+    <div class="hero-cta-group">
+      <a href="#events" class="btn btn-primary">Upcoming Events</a>
+      <a href="#fam" class="btn btn-outline">FAM Trips & Incentives</a>
+    </div>
+  </div>
+  <div class="hero-curtain">
+    <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%;height:120px;">
+      <path d="M0,60 C200,120 400,0 600,80 C800,160 1000,20 1200,80 C1340,120 1440,60 1440,60 L1440,120 L0,120 Z" fill="#F5F3EF"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ── EVENTS SECTION ────────────────────────────── -->
+<section class="section" id="events">
+  <div class="container">
+    <div class="section-header fade-up">
+      <p class="section-label">Where to Find Us</p>
+      <h2 class="section-title">Upcoming Events</h2>
+      <p class="section-desc">We travel the world to connect with our partners. Find us at leading trade shows and industry events — and book a meeting with our team while you're there.</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="events-grid">
+
+      <!-- Event Card 1 -->
+      <div class="event-card fade-up">
+        <div class="event-card-header">
+          <div class="event-date-badge">
+            <span class="day">14</span>
+            <span class="month">Sep</span>
+          </div>
+          <h3 class="event-title">Event Name Here</h3>
+          <p class="event-location">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 113.5 5 1.5 1.5 0 015 6.5z" fill="currentColor"/></svg>
+            City, Country
+          </p>
+        </div>
+        <div class="event-card-body">
+          <p class="event-desc">Brief description of the event goes here. Describe what the event is, who attends, and why Discova is participating. Keep it purposeful and partner-focused.</p>
+          <div class="event-tags">
+            <span class="tag">Trade Show</span>
+            <span class="tag">Asia Specialists</span>
+          </div>
+        </div>
+        <div class="event-card-footer">
+          <button class="btn btn-book" onclick="openModal('Event Name Here', 'Sep 14 – City, Country')">Book a Meeting →</button>
+        </div>
+      </div>
+
+      <!-- Event Card 2 -->
+      <div class="event-card fade-up">
+        <div class="event-card-header">
+          <div class="event-date-badge">
+            <span class="day">22</span>
+            <span class="month">Oct</span>
+          </div>
+          <h3 class="event-title">Event Name Here</h3>
+          <p class="event-location">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 113.5 5 1.5 1.5 0 015 6.5z" fill="currentColor"/></svg>
+            City, Country
+          </p>
+        </div>
+        <div class="event-card-body">
+          <p class="event-desc">Brief description of the event goes here. Describe what the event is, who attends, and why Discova is participating. Keep it purposeful and partner-focused.</p>
+          <div class="event-tags">
+            <span class="tag">Conference</span>
+            <span class="tag">B2B</span>
+          </div>
+        </div>
+        <div class="event-card-footer">
+          <button class="btn btn-book" onclick="openModal('Event Name Here', 'Oct 22 – City, Country')">Book a Meeting →</button>
+        </div>
+      </div>
+
+      <!-- Event Card 3 -->
+      <div class="event-card fade-up">
+        <div class="event-card-header">
+          <div class="event-date-badge">
+            <span class="day">08</span>
+            <span class="month">Nov</span>
+          </div>
+          <h3 class="event-title">Event Name Here</h3>
+          <p class="event-location">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 113.5 5 1.5 1.5 0 015 6.5z" fill="currentColor"/></svg>
+            City, Country
+          </p>
+        </div>
+        <div class="event-card-body">
+          <p class="event-desc">Brief description of the event goes here. Describe what the event is, who attends, and why Discova is participating. Keep it purposeful and partner-focused.</p>
+          <div class="event-tags">
+            <span class="tag">Expo</span>
+            <span class="tag">Networking</span>
+          </div>
+        </div>
+        <div class="event-card-footer">
+          <button class="btn btn-book" onclick="openModal('Event Name Here', 'Nov 8 – City, Country')">Book a Meeting →</button>
+        </div>
+      </div>
+
+    </div><!-- /events-grid -->
+  </div>
+</section>
+
+<!-- ── FAM TRIPS & INCENTIVES ────────────────────── -->
+<section class="section" id="fam">
+  <div class="threads-bg">
+    <svg viewBox="0 0 1440 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,250 C300,150 600,400 900,250 C1100,160 1300,350 1440,250" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="2"/>
+      <path d="M0,400 C250,300 550,550 800,400 C1050,280 1250,480 1440,380" fill="none" stroke="rgba(250,172,24,0.07)" stroke-width="1.5"/>
+      <path d="M0,550 C350,450 700,650 1000,520 C1200,430 1380,580 1440,540" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <div class="container">
+    <div class="section-header fade-up">
+      <p class="section-label">Rewards & Discovery</p>
+      <h2 class="section-title">FAM Trips & Incentives</h2>
+      <p class="section-desc">Explore Asia first-hand and reward your team's success. Discover our running incentive programmes and how to qualify for an immersive Discova FAM experience.</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs fade-up">
+      <button class="tab-btn active" onclick="switchTab('fam-trips')">FAM Trips</button>
+      <button class="tab-btn" onclick="switchTab('incentives')">Incentive Programmes</button>
+    </div>
+
+    <!-- TAB: FAM TRIPS -->
+    <div class="tab-panel active" id="tab-fam-trips">
+      <div class="fam-grid">
+
+        <!-- FAM Card 1 -->
+        <div class="fam-card fade-up">
+          <div class="fam-card-img">
+            <div class="fam-card-img-pattern"></div>
+            <div class="fam-dest-badge">
+              <span>Destination</span>
+              Country / Region Name
+            </div>
+          </div>
+          <div class="fam-card-body">
+            <h3 class="fam-card-title">FAM Trip Name / Theme</h3>
+            <div class="fam-card-meta">
+              <span class="fam-meta-item">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="2" width="10" height="9" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 1v2M8 1v2M1 5h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Month YYYY
+              </span>
+              <span class="fam-meta-item">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.2"/><path d="M6 3.5V6l1.5 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                X Days / Y Nights
+              </span>
+              <span class="fam-meta-item">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10l2-5 2 3 2-4 2 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                X Spots Available
+              </span>
+            </div>
+            <p class="fam-card-desc">Describe this FAM Trip itinerary: key destinations, highlights, cultural experiences, and what partners will discover. Keep the tone immersive and vibrant.</p>
+            <div class="qualify-criteria">
+              <p class="qualify-label">How to Qualify</p>
+              <ul class="criteria-list">
+                <li>Qualifying criterion one — e.g. minimum booking volume</li>
+                <li>Qualifying criterion two — e.g. market/region eligibility</li>
+                <li>Qualifying criterion three — e.g. partnership tier requirement</li>
+              </ul>
+            </div>
+            <button class="btn btn-fam">Express Interest →</button>
+          </div>
+        </div>
+
+        <!-- FAM Card 2 -->
+        <div class="fam-card fade-up">
+          <div class="fam-card-img">
+            <div class="fam-card-img-pattern" style="background-image:repeating-linear-gradient(60deg,#25C2BA 0,#25C2BA 1px,transparent 0,transparent 50%);background-size:14px 14px;"></div>
+            <div class="fam-dest-badge">
+              <span>Destination</span>
+              Country / Region Name
+            </div>
+          </div>
+          <div class="fam-card-body">
+            <h3 class="fam-card-title">FAM Trip Name / Theme</h3>
+            <div class="fam-card-meta">
+              <span class="fam-meta-item">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="2" width="10" height="9" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 1v2M8 1v2M1 5h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Month YYYY
+              </span>
+              <span class="fam-meta-item">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.2"/><path d="M6 3.5V6l1.5 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                X Days / Y Nights
+              </span>
+              <span class="fam-meta-item">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10l2-5 2 3 2-4 2 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                X Spots Available
+              </span>
+            </div>
+            <p class="fam-card-desc">Describe this FAM Trip itinerary: key destinations, highlights, cultural experiences, and what partners will discover. Keep the tone immersive and vibrant.</p>
+            <div class="qualify-criteria">
+              <p class="qualify-label">How to Qualify</p>
+              <ul class="criteria-list">
+                <li>Qualifying criterion one — e.g. minimum booking volume</li>
+                <li>Qualifying criterion two — e.g. market/region eligibility</li>
+                <li>Qualifying criterion three — e.g. partnership tier requirement</li>
+              </ul>
+            </div>
+            <button class="btn btn-fam">Express Interest →</button>
+          </div>
+        </div>
+
+      </div><!-- /fam-grid -->
+
+      <!-- How Qualification Works -->
+      <div class="qualify-how fade-up">
+        <h3>How FAM Trip Qualification Works</h3>
+        <p>Our FAM trips are designed for active partners who are committed to growing their Asia programme with Discova. Here's a step-by-step overview of how to earn your place.</p>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-num">1</div>
+            <p class="step-label">Reach Your Threshold</p>
+            <p class="step-desc">Meet the minimum booking or revenue threshold specified for each FAM trip within the qualifying period.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <p class="step-label">Submit Your Interest</p>
+            <p class="step-desc">Express your interest via the form on this page or reach out directly to your Discova account manager.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <p class="step-label">Receive Confirmation</p>
+            <p class="step-desc">Our team will review your eligibility and confirm your spot. Spots are limited and awarded on merit.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <p class="step-label">Experience Discova</p>
+            <p class="step-desc">Immerse yourself in one of Asia's most extraordinary destinations — firsthand, purposeful, and unforgettable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: INCENTIVES -->
+    <div class="tab-panel" id="tab-incentives">
+      <div class="incentives-grid">
+
+        <!-- Incentive 1 -->
+        <div class="incentive-card gold fade-up">
+          <div class="incentive-icon gold">🏆</div>
+          <h3 class="incentive-title">Incentive Programme Name</h3>
+          <p class="incentive-period gold">Running: Month – Month YYYY</p>
+          <p class="incentive-desc">Describe the incentive: what the reward is, which bookings qualify, and the value it offers to your partners. Use energetic, partner-focused language.</p>
+          <div class="incentive-qualify">
+            <p class="qualify-label">How to Qualify</p>
+            <ul class="criteria-list">
+              <li>Minimum qualifying condition one</li>
+              <li>Minimum qualifying condition two</li>
+              <li>Eligible product/destination scope</li>
+            </ul>
+          </div>
+          <div class="incentive-status"><span class="status-dot"></span> Currently Active</div>
+        </div>
+
+        <!-- Incentive 2 -->
+        <div class="incentive-card teal fade-up">
+          <div class="incentive-icon teal">✈️</div>
+          <h3 class="incentive-title">Incentive Programme Name</h3>
+          <p class="incentive-period teal">Running: Month – Month YYYY</p>
+          <p class="incentive-desc">Describe the incentive: what the reward is, which bookings qualify, and the value it offers to your partners. Use energetic, partner-focused language.</p>
+          <div class="incentive-qualify">
+            <p class="qualify-label">How to Qualify</p>
+            <ul class="criteria-list">
+              <li>Minimum qualifying condition one</li>
+              <li>Minimum qualifying condition two</li>
+              <li>Eligible product/destination scope</li>
+            </ul>
+          </div>
+          <div class="incentive-status"><span class="status-dot"></span> Currently Active</div>
+        </div>
+
+        <!-- Incentive 3 -->
+        <div class="incentive-card velvet fade-up">
+          <div class="incentive-icon velvet">🎁</div>
+          <h3 class="incentive-title">Incentive Programme Name</h3>
+          <p class="incentive-period velvet">Running: Month – Month YYYY</p>
+          <p class="incentive-desc">Describe the incentive: what the reward is, which bookings qualify, and the value it offers to your partners. Use energetic, partner-focused language.</p>
+          <div class="incentive-qualify">
+            <p class="qualify-label">How to Qualify</p>
+            <ul class="criteria-list">
+              <li>Minimum qualifying condition one</li>
+              <li>Minimum qualifying condition two</li>
+              <li>Eligible product/destination scope</li>
+            </ul>
+          </div>
+          <div class="incentive-status"><span class="status-dot"></span> Currently Active</div>
+        </div>
+
+        <!-- Incentive 4 -->
+        <div class="incentive-card gold fade-up">
+          <div class="incentive-icon gold">⭐</div>
+          <h3 class="incentive-title">Incentive Programme Name</h3>
+          <p class="incentive-period gold">Running: Month – Month YYYY</p>
+          <p class="incentive-desc">Describe the incentive: what the reward is, which bookings qualify, and the value it offers to your partners. Use energetic, partner-focused language.</p>
+          <div class="incentive-qualify">
+            <p class="qualify-label">How to Qualify</p>
+            <ul class="criteria-list">
+              <li>Minimum qualifying condition one</li>
+              <li>Minimum qualifying condition two</li>
+              <li>Eligible product/destination scope</li>
+            </ul>
+          </div>
+          <div class="incentive-status"><span class="status-dot"></span> Currently Active</div>
+        </div>
+
+      </div><!-- /incentives-grid -->
+
+      <!-- Incentive General Qualification -->
+      <div class="qualify-how fade-up">
+        <h3>General Qualification Guidelines</h3>
+        <p>All incentive programmes are open to registered Discova partners. The following process applies across all running programmes.</p>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-num">1</div>
+            <p class="step-label">Register as a Partner</p>
+            <p class="step-desc">Ensure you are a registered Discova trade partner in an eligible market.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <p class="step-label">Book Within the Period</p>
+            <p class="step-desc">Make qualifying bookings within the specified campaign window using the designated booking process.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <p class="step-label">Track Your Progress</p>
+            <p class="step-desc">Contact your Discova account manager to track your bookings against each incentive threshold.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <p class="step-label">Claim Your Reward</p>
+            <p class="step-desc">Rewards are issued after the campaign closes and final booking values are confirmed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── CTA BAND ───────────────────────────────────── -->
+<div class="cta-band" id="contact">
+  <h2>Ready to Connect?</h2>
+  <p>Speak to our team about events, FAM trips, or how we can help you build extraordinary journeys for your customers.</p>
+  <a href="mailto:partnerships@discova.com" class="btn">Get in Touch →</a>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<footer>
+  <p class="footer-logo">Discova</p>
+  <p class="footer-tagline">Purpose-Driven Journeys</p>
+  <p class="footer-copy">© 2026 Discova. All rights reserved. Asia's Leading Destination Management Company.</p>
+</footer>
+
+<!-- ── BOOKING MODAL ──────────────────────────────── -->
+<div class="modal-overlay" id="meetingModal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <h2>Book a Meeting</h2>
+      <p>Meet the Discova team at this event</p>
+      <span class="modal-event-tag" id="modalEventTag">Event Name</span>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name *</label>
+          <input type="text" placeholder="Jane" />
+        </div>
+        <div class="form-group">
+          <label>Last Name *</label>
+          <input type="text" placeholder="Smith" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Company / Agency *</label>
+        <input type="text" placeholder="Your company name" />
+      </div>
+      <div class="form-group">
+        <label>Email Address *</label>
+        <input type="email" placeholder="jane@agency.com" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Country / Market</label>
+          <input type="text" placeholder="e.g. Australia" />
+        </div>
+        <div class="form-group">
+          <label>Preferred Meeting Time</label>
+          <select>
+            <option value="">Select a slot</option>
+            <option>Morning (09:00–12:00)</option>
+            <option>Afternoon (13:00–17:00)</option>
+            <option>Flexible</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Topics to Discuss</label>
+        <textarea placeholder="e.g. Thailand itineraries, new products, incentive programmes…"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-submit" onclick="submitForm()">Request Meeting →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── MODAL ──────────────────────────────────────
+  function openModal(eventName, eventMeta) {
+    document.getElementById('modalEventTag').textContent = eventName + ' · ' + eventMeta;
+    document.getElementById('meetingModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('meetingModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('meetingModal')) closeModal();
+  }
+  function submitForm() {
+    closeModal();
+    alert('Thank you! A member of our team will be in touch to confirm your meeting.');
+  }
+
+  // ── TABS ───────────────────────────────────────
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  // ── FADE-UP ON SCROLL ──────────────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
